@@ -1,0 +1,19 @@
+name: digest
+
+on:
+  schedule:
+    - cron: "0 7 * * *"   # каждый день в 07:00 UTC
+  workflow_dispatch:       # кнопка ручного запуска
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python digest.py
+        env:
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
